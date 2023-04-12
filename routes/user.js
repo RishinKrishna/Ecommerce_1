@@ -97,8 +97,10 @@ router.post('/change-product-quantity',(req,res,next)=>{
 
 
 router.post('/remove-product',(req,res)=>{
+  console.log(req.body);
   userHelpers.removeProduct(req.body).then((response)=>{
-    resolve(response)
+  res.json(response)
+    
   })
 })
 
@@ -112,14 +114,14 @@ router.get('/place-order',verifyLogin, async(req,res)=>{
 router.post('/place-order',async(req,res)=>{
   let products = await userHelpers.getCartProductList(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
-  userHelpers.placeOrder(req.body,products,totalPrice).then((orderId)=>{
-    if (req.body['payment-method']==='COD'){
-      res.json({codSuccess:true})
-    }else{
-      userHelpers.gerarateazorpay(orderId,totalPrice).then((response)=>{
-        res.json(response)
-      })
-    }
+  userHelpers.placeOrder(req.body,products,totalPrice).then((response)=>{
+    // if (req.body['payment-method']==='COD'){
+    //   res.json({codSuccess:true})
+    // }else{
+    //   userHelpers.gerarateazorpay(orderId,totalPrice).then((response)=>{
+    //     res.json(response)
+    //   })
+    // }
     res.json({status:true})
   })
   console.log(req.body)
@@ -134,11 +136,11 @@ router.get('/orders',async(req,res)=>{
 router.get('/view-order-products/:id',verifyLogin,async(req,res)=>{
   let products=await userHelpers.getOrderProducts(req.params.id)
   
-  return res.render('user/view-order-products',{user:req.session.user,products})
+   return res.render('user/view-order-products',{user:req.session.user,products})
 })
-router.post('/verify-payment',(req,res)=>{
-  console.log(req.body);
-})
+// router.post('/verify-payment',(req,res)=>{
+//   console.log(req.body);
+// })
 
 module.exports = router;
 

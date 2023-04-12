@@ -24,7 +24,7 @@
                             onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
                     </td>
                     <td>
-                        <a href="/remove-product" id="removeItem" class="btn btn-danger" onclick="removeProduct('{{this._id}}','{{this.product._id}}'">Remove</a>
+                       <button type="button" class="btn btn-danger" onclick="removeProduct('{{this._id}}','{{this.product._id}}')">Remove</button>
                     </td>
                 </tr>
                 {{/each}}
@@ -66,4 +66,25 @@
             }
         })
     }
+
+    function removeProduct(cartId,proId,userId){
+  
+$.ajax({
+  url:'/remove-product',
+   data:{
+        user:userId,
+        cart:cartId,
+        product:proId,
+        
+      },
+      method:'post',
+      success:(response)=>{
+        if(response.removeProduct){
+          alert('product removed')
+          location.reload()
+        }
+      }
+
+})
+}
 </script>

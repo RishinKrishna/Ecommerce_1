@@ -4,13 +4,13 @@ const productHelpers = require('../helpers/product-helpers');
 var router = express.Router();
 var productHelper = require('../helpers/product-helpers');
 const userHelpers = require('../helpers/user-helpers');
-// /* GET users listing. */
-//  router.get('/', function (req, res, next) {
-//    productHelpers.getAllProducts().then((products) => {
-//      console.log(products)
-//      res.render('admin/view-products', { admin: true, products })
-//    })
-//  });
+/* GET users listing. */
+ router.get('/', function (req, res, next) {
+   productHelpers.getAllProducts().then((products) => {
+     console.log(products)
+     res.render('admin/view-products', { admin: true, products })
+   })
+ });
 
 
 router.get('/add-product', function (req, res) {
